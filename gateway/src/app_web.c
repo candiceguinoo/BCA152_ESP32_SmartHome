@@ -30,16 +30,37 @@ static esp_err_t handle_http_get(httpd_req_t *req)
 static esp_err_t handle_http_post(httpd_req_t *req)
 {
     char content[100];
-    if (httpd_req_recv(req, content, req->content_len) <= 0)
+    size_t len = req->content_len;
+
+    // Reject empty or oversized bodies (prevents a buffer overflow)
+    if (len == 0 || len >= sizeof(content))
     {
+        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Bad request");
         return ESP_FAIL;
     }
-    ESP_LOGI(TAG, "%.*s", req->content_len, content);
-    content[req->content_len] = 0;
-    char *val = strchr(content, '=');
+
+    int ret = httpd_req_recv(req, content, len);
+    if (ret <= 0)
+    {
+        if (ret == HTTPD_SOCK_ERR_TIMEOUT)
+        {
+            httpd_resp_send_408(req);
+        }
+        return ESP_FAIL;
+    }
+    content[ret] = 0;
+    ESP_LOGI(TAG, "%s", content);
+
+    // Body looks like: switch_state=ON
+    const char *val = strchr(content, '=');
+    if (val == NULL)
+    {
+        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Bad request");
+        return ESP_FAIL;
+    }
     if (set_sw)
     {
-        set_sw(!strcmp(val + 1, "ON"));
+        set_sw(strcmp(val + 1, "ON") == 0);
     }
 
     return httpd_resp_send(req, HTML_FORM, HTTPD_RESP_USE_STRLEN);
@@ -65,5 +86,10 @@ void appweb_start_server(void)
     {
         httpd_register_uri_handler(server, &uri_get);
         httpd_register_uri_handler(server, &uri_post);
+        ESP_LOGI(TAG, "web server started");
+    }
+    else
+    {
+        ESP_LOGE(TAG, "failed to start web server");
     }
 }

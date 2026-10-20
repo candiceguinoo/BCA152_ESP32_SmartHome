@@ -1,4 +1,3 @@
-
 #include "app_ip.h"
 
 #include "freertos/FreeRTOS.h"
@@ -6,6 +5,7 @@
 #include "esp_system.h"
 #include "esp_wifi.h"
 #include "esp_event.h"
+#include "esp_netif.h"
 #include "esp_log.h"
 #include "nvs_flash.h"
 #include "lwip/err.h"
@@ -40,6 +40,8 @@ static void handle_wifi_connection(void *arg, esp_event_base_t event_base,
     }
     else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP)
     {
+        ip_event_got_ip_t *event = (ip_event_got_ip_t *)event_data;
+        ESP_LOGI("app.ip", "open this in your browser: http://" IPSTR, IP2STR(&event->ip_info.ip));
         if (m_params.on_connected)
         {
             m_params.on_connected();
@@ -78,6 +80,6 @@ void appip_connect_wifi(connect_wifi_params_t p)
     esp_wifi_init(&cfg);
     esp_wifi_set_ps(WIFI_PS_MIN_MODEM);
     esp_wifi_set_mode(WIFI_MODE_STA);
-    esp_wifi_set_config(ESP_IF_WIFI_STA, &wifi_config);
+    esp_wifi_set_config(WIFI_IF_STA, &wifi_config);
     esp_wifi_start();
 }
