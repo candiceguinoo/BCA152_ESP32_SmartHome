@@ -18,3 +18,6 @@ Thumbs.db
 # Never commit secrets
 .env
 secrets.h
+
+# PlatformIO/menuconfig backups
+*.old
