@@ -21,3 +21,6 @@ secrets.h
 
 # PlatformIO/menuconfig backups
 *.old
+
+# PlatformIO/menuconfig backups
+*.old
