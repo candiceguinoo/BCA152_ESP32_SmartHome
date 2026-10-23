@@ -1,4 +1,3 @@
-
 #include <string.h>
 #include "app_web.h"
 #include "esp_err.h"
@@ -7,14 +6,37 @@
 
 #define TAG "app.web"
 
-static const char *HTML_FORM = "<html><form action=\"/\" method=\"post\">"
-                               "<label for=\"switch_state\">Set switch:</label>"
-                               "<select id=\"switch_state\" name=\"switch_state\">"
-                               "<option value=\"ON\">ON</option>"
-                               "<option value=\"OFF\">OFF</option>"
-                               "</select>"
-                               "<input type=\"submit\" value=\"Submit\">"
-                               "</form></html>";
+// The page is sent in three chunks: head + status text + tail.
+// (Kept free of '%' characters so it is safe to edit without printf concerns.)
+static const char *PAGE_HEAD =
+    "<!DOCTYPE html><html lang='en'><head><meta charset='utf-8'>"
+    "<meta name='viewport' content='width=device-width,initial-scale=1'>"
+    "<title>Smart home</title><style>"
+    "*{box-sizing:border-box;margin:0;padding:0}"
+    "body{min-height:100vh;background:#2b2b2b;color:#fff;display:flex;justify-content:center;"
+    "font-family:ui-sans-serif,system-ui,'Segoe UI',Helvetica,Arial,sans-serif}"
+    "main{width:100%;max-width:440px;padding:48px 24px;display:flex;flex-direction:column}"
+    ".name{font-size:15px;font-weight:600}"
+    "h1{font-size:64px;line-height:1;font-weight:800;letter-spacing:-.04em;margin:96px 0 32px}"
+    "form{display:flex;flex-direction:column;gap:12px}"
+    "button{width:100%;padding:22px 0;border:3px solid #fff;font:inherit;font-size:18px;"
+    "font-weight:700;cursor:pointer;background:transparent;color:#fff}"
+    ".on{background:#fff;color:#2b2b2b}"
+    ".on:hover{background:#2b2b2b;color:#fff}"
+    ".off:hover{background:#fff;color:#2b2b2b}"
+    "button:active{transform:translateY(2px)}"
+    "button:focus-visible{outline:3px solid #fff;outline-offset:4px}"
+    ".status{margin-top:32px;font-size:15px}"
+    "</style></head><body><main>"
+    "<p class='name'>Smart home</p>"
+    "<h1>Light</h1>"
+    "<form method='post' action='/'>"
+    "<button class='on' name='switch_state' value='ON'>Turn on</button>"
+    "<button class='off' name='switch_state' value='OFF'>Turn off</button>"
+    "</form>"
+    "<p class='status'>";
+
+static const char *PAGE_TAIL = "</p></main></body></html>";
 
 static set_switch_f set_sw = NULL;
 
@@ -23,9 +45,18 @@ void appweb_init(set_switch_f f)
     set_sw = f;
 }
 
+static esp_err_t send_page(httpd_req_t *req, const char *status)
+{
+    httpd_resp_set_type(req, "text/html");
+    httpd_resp_send_chunk(req, PAGE_HEAD, HTTPD_RESP_USE_STRLEN);
+    httpd_resp_send_chunk(req, status, HTTPD_RESP_USE_STRLEN);
+    httpd_resp_send_chunk(req, PAGE_TAIL, HTTPD_RESP_USE_STRLEN);
+    return httpd_resp_send_chunk(req, NULL, 0); // end of response
+}
+
 static esp_err_t handle_http_get(httpd_req_t *req)
 {
-    return httpd_resp_send(req, HTML_FORM, HTTPD_RESP_USE_STRLEN);
+    return send_page(req, "No command sent yet");
 }
 
 static esp_err_t handle_http_post(httpd_req_t *req)
@@ -59,12 +90,21 @@ static esp_err_t handle_http_post(httpd_req_t *req)
         httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Bad request");
         return ESP_FAIL;
     }
-    if (set_sw)
+    val++;
+
+    bool on = (strcmp(val, "ON") == 0);
+    if (!on && strcmp(val, "OFF") != 0)
     {
-        set_sw(strcmp(val + 1, "ON") == 0);
+        httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "Bad request");
+        return ESP_FAIL;
     }
 
-    return httpd_resp_send(req, HTML_FORM, HTTPD_RESP_USE_STRLEN);
+    if (set_sw)
+    {
+        set_sw(on);
+    }
+
+    return send_page(req, on ? "Turned on" : "Turned off");
 }
 
 void appweb_start_server(void)
