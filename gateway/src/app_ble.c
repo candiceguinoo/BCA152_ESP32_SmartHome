@@ -1,4 +1,3 @@
-
 #include "app_ble.h"
 
 #include "esp_log.h"
