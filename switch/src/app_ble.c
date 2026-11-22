@@ -2,8 +2,6 @@
 #include "app_ble.h"
 
 #include "esp_log.h"
-#include "nvs_flash.h"
-
 #include "esp_gap_ble_api.h"
 #include "esp_ble_mesh_defs.h"
 #include "esp_ble_mesh_common_api.h"
@@ -19,7 +17,7 @@
 
 static app_ble_cb_t cbs;
 
-static uint8_t dev_uuid[16] = {0xdd, 0xdd};
+static uint8_t dev_uuid[16] = {'S', 'W'};
 
 static esp_ble_mesh_client_t onoff_client;
 
@@ -110,8 +108,17 @@ static void generic_server_cb(esp_ble_mesh_generic_server_cb_event_t event,
                                                    sizeof(srv->state.onoff),
                                                    &srv->state.onoff);
             }
-            esp_ble_mesh_model_publish(model, ESP_BLE_MESH_MODEL_OP_GEN_ONOFF_STATUS,
-                                       sizeof(srv->state.onoff), &srv->state.onoff, ROLE_NODE);
+            esp_err_t err = esp_ble_mesh_model_publish(
+                model,
+                ESP_BLE_MESH_MODEL_OP_GEN_ONOFF_STATUS,
+                sizeof(srv->state.onoff),
+                &srv->state.onoff,
+                ROLE_NODE);
+            if (err != ESP_OK)
+            {
+                ESP_LOGE(TAG, "Failed to publish switch status: %s",
+                         esp_err_to_name(err));
+            }
         }
         break;
     default:
@@ -142,12 +149,6 @@ void init_ble(app_ble_cb_t callbacks)
     appble_attn_cbs_t attn_cbs = {cbs.attn_on, cbs.attn_off};
     appble_set_attn_cbs(attn_cbs);
 
-    if (nvs_flash_init() == ESP_ERR_NVS_NO_FREE_PAGES)
-    {
-        ESP_ERROR_CHECK(nvs_flash_erase());
-        ESP_ERROR_CHECK(nvs_flash_init());
-    }
-
     if (appble_bt_init() != ESP_OK)
     {
         ESP_LOGE(TAG, "bluetooth_init failed");
@@ -167,6 +168,17 @@ void init_ble(app_ble_cb_t callbacks)
         ESP_LOGE(TAG, "Failed to initialize mesh stack");
         return;
     }
+
+    appble_log_mesh_restore_state();
+
+    esp_err_t err = appble_set_device_name("Switch");
+    if (err != ESP_OK)
+    {
+        ESP_LOGE(TAG, "Failed to set BLE device name: %s",
+                 esp_err_to_name(err));
+        return;
+    }
+
     if (esp_ble_mesh_node_prov_enable(ESP_BLE_MESH_PROV_ADV | ESP_BLE_MESH_PROV_GATT) != ESP_OK)
     {
         ESP_LOGE(TAG, "Failed to enable mesh node");

@@ -20,6 +20,11 @@ static void attn_off(void)
 
 void app_main(void)
 {
+    if (appble_nvs_init() != ESP_OK)
+    {
+        return;
+    }
+
     init_hw();
     appled_init();
 

@@ -39,6 +39,7 @@ static const char *PAGE_HEAD =
 static const char *PAGE_TAIL = "</p></main></body></html>";
 
 static set_switch_f set_sw = NULL;
+static httpd_handle_t server = NULL;
 
 void appweb_init(set_switch_f f)
 {
@@ -109,6 +110,12 @@ static esp_err_t handle_http_post(httpd_req_t *req)
 
 void appweb_start_server(void)
 {
+    if (server != NULL)
+    {
+        ESP_LOGW(TAG, "web server already running");
+        return;
+    }
+
     httpd_uri_t uri_get = {
         .uri = "/",
         .method = HTTP_GET,
@@ -122,15 +129,33 @@ void appweb_start_server(void)
         .user_ctx = NULL};
 
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();
-    httpd_handle_t server = NULL;
+
     if (httpd_start(&server, &config) == ESP_OK)
     {
-        httpd_register_uri_handler(server, &uri_get);
-        httpd_register_uri_handler(server, &uri_post);
-        ESP_LOGI(TAG, "web server started");
+        esp_err_t err = httpd_register_uri_handler(server, &uri_get);
+        if (err == ESP_OK)
+        {
+            err = httpd_register_uri_handler(server, &uri_post);
+        }
+        if (err != ESP_OK)
+        {
+            ESP_LOGE(TAG, "failed to register web handlers: %s",
+                     esp_err_to_name(err));
+            esp_err_t stop_err = httpd_stop(server);
+            if (stop_err != ESP_OK)
+            {
+                ESP_LOGE(TAG, "failed to stop partially configured web server: %s",
+                         esp_err_to_name(stop_err));
+            }
+            server = NULL;
+            return;
+        }
+
+        ESP_LOGI(TAG, "web server started successfully");
     }
     else
     {
+        server = NULL;
         ESP_LOGE(TAG, "failed to start web server");
     }
 }

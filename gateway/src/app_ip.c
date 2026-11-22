@@ -1,5 +1,6 @@
 #include "app_ip.h"
 
+#include <stdint.h>
 #include <string.h>
 
 #include "freertos/FreeRTOS.h"
@@ -9,50 +10,77 @@
 #include "esp_event.h"
 #include "esp_netif.h"
 #include "esp_log.h"
-#include "nvs_flash.h"
 #include "lwip/err.h"
 #include "lwip/sys.h"
 
-#define MAX_RETRY 10
-
 static const char *TAG = "app.ip";
-static int retry_cnt = 0;
+
+#ifndef WIFI_SSID
+#define WIFI_SSID ""
+#endif
+
+#ifndef WIFI_PASS
+#define WIFI_PASS ""
+#endif
+
+static uint32_t retry_cnt;
 static connect_wifi_params_t m_params;
+static TaskHandle_t retry_task_handle;
+static volatile bool wifi_connected;
+
+static void wifi_retry_task(void *arg)
+{
+    while (true)
+    {
+        ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+        retry_cnt = 0;
+        while (!wifi_connected)
+        {
+            uint32_t exponent = retry_cnt < 6U ? retry_cnt++ : 6U;
+            uint32_t delay_seconds = 1U << exponent;
+            if (retry_cnt > 6U)
+            {
+                retry_cnt = 6U;
+            }
+            vTaskDelay(pdMS_TO_TICKS(delay_seconds * 1000U));
+
+            if (!wifi_connected)
+            {
+                esp_err_t err = esp_wifi_connect();
+                if (err != ESP_OK)
+                {
+                    ESP_LOGW(TAG, "Wi-Fi reconnect request failed: %s",
+                             esp_err_to_name(err));
+                }
+            }
+        }
+    }
+}
 
 static void handle_wifi_connection(void *arg, esp_event_base_t event_base,
                                    int32_t event_id, void *event_data)
 {
     if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_START)
     {
-        ESP_LOGI(TAG, "STA started, connecting to \"%s\"", WIFI_SSID);
+        ESP_LOGI(TAG, "STA started; connecting");
         esp_err_t err = esp_wifi_connect();
         if (err != ESP_OK)
         {
             ESP_LOGE(TAG, "esp_wifi_connect failed: %s", esp_err_to_name(err));
+            xTaskNotifyGive(retry_task_handle);
         }
     }
     else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED)
     {
         wifi_event_sta_disconnected_t *d = (wifi_event_sta_disconnected_t *)event_data;
-        ESP_LOGW(TAG, "disconnected, reason=%d, retry %d/%d",
-                 d->reason, retry_cnt, MAX_RETRY);
-
-        if (retry_cnt++ < MAX_RETRY)
-        {
-            esp_wifi_connect();
-        }
-        else
-        {
-            ESP_LOGE(TAG, "giving up after %d retries", MAX_RETRY);
-            if (m_params.on_failed)
-            {
-                m_params.on_failed();
-            }
-        }
+        wifi_connected = false;
+        ESP_LOGW(TAG, "disconnected, reason=%d; reconnecting with capped backoff",
+                 d->reason);
+        xTaskNotifyGive(retry_task_handle);
     }
     else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP)
     {
-        retry_cnt = 0;
+        wifi_connected = true;
         ip_event_got_ip_t *event = (ip_event_got_ip_t *)event_data;
         ESP_LOGI(TAG, "open this in your browser: http://" IPSTR,
                  IP2STR(&event->ip_info.ip));
@@ -67,26 +95,44 @@ void appip_connect_wifi(connect_wifi_params_t p)
 {
     m_params = p;
 
-    esp_err_t ret = nvs_flash_init();
-    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND)
-    {
-        nvs_flash_erase();
-        nvs_flash_init();
-    }
-
-    esp_netif_init();
-    esp_event_loop_create_default(); // returns an error if already created; safe to ignore
-    esp_netif_create_default_wifi_sta();
-
-    esp_event_handler_register(WIFI_EVENT, ESP_EVENT_ANY_ID, &handle_wifi_connection, NULL);
-    esp_event_handler_register(IP_EVENT, IP_EVENT_STA_GOT_IP, &handle_wifi_connection, NULL);
-
-    ESP_LOGI(TAG, "ssid len=%d, pass len=%d",
-             (int)strlen(WIFI_SSID), (int)strlen(WIFI_PASS));
     if (strlen(WIFI_SSID) == 0)
     {
-        ESP_LOGE(TAG, "WIFI_SSID is empty! Fix your define / build flag.");
+        ESP_LOGE(TAG, "WIFI_SSID is empty; provide it through the build environment.");
+        if (m_params.on_failed)
+        {
+            m_params.on_failed();
+        }
+        return;
     }
+
+    if (xTaskCreate(wifi_retry_task, "wifi_retry",
+                    3 * configMINIMAL_STACK_SIZE, NULL, 5,
+                    &retry_task_handle) != pdPASS)
+    {
+        ESP_LOGE(TAG, "failed to create Wi-Fi retry task");
+        if (m_params.on_failed)
+        {
+            m_params.on_failed();
+        }
+        return;
+    }
+
+    ESP_ERROR_CHECK(esp_netif_init());
+    ESP_ERROR_CHECK(esp_event_loop_create_default());
+    if (esp_netif_create_default_wifi_sta() == NULL)
+    {
+        ESP_LOGE(TAG, "failed to create default Wi-Fi station interface");
+        if (m_params.on_failed)
+        {
+            m_params.on_failed();
+        }
+        return;
+    }
+
+    ESP_ERROR_CHECK(esp_event_handler_register(
+        WIFI_EVENT, ESP_EVENT_ANY_ID, &handle_wifi_connection, NULL));
+    ESP_ERROR_CHECK(esp_event_handler_register(
+        IP_EVENT, IP_EVENT_STA_GOT_IP, &handle_wifi_connection, NULL));
 
     wifi_config_t wifi_config = {
         .sta = {
@@ -108,7 +154,7 @@ void appip_connect_wifi(connect_wifi_params_t p)
 
     wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
     ESP_ERROR_CHECK(esp_wifi_init(&cfg));
-    esp_wifi_set_ps(WIFI_PS_MIN_MODEM);
+    ESP_ERROR_CHECK(esp_wifi_set_ps(WIFI_PS_MIN_MODEM));
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config));
     ESP_ERROR_CHECK(esp_wifi_start());

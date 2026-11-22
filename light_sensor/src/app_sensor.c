@@ -14,6 +14,7 @@ static light_changed_f light_changed_cb;
 
 static void read_light(void *arg)
 {
+    bool first_read = true;
     while (1)
     {
         vTaskDelay(1000 / portTICK_PERIOD_MS);
@@ -23,8 +24,9 @@ static void read_light(void *arg)
         ESP_LOGI(TAG, "LDR DO=%d -> %s", level, dark ? "DARK" : "BRIGHT");
 
         // Only notify the BLE network when the state actually changes
-        if (dark != light_level_low)
+        if (first_read || dark != light_level_low)
         {
+            first_read = false;
             light_level_low = dark;
             if (light_changed_cb != NULL)
             {
@@ -46,9 +48,18 @@ void init_hw(light_changed_f f)
         .pull_down_en = GPIO_PULLDOWN_DISABLE,
         .intr_type = GPIO_INTR_DISABLE,
     };
-    gpio_config(&io_conf);
+    esp_err_t err = gpio_config(&io_conf);
+    if (err != ESP_OK)
+    {
+        ESP_LOGE(TAG, "Failed to configure LDR input: %s", esp_err_to_name(err));
+        return;
+    }
 
-    xTaskCreate(read_light, "light", 3 * configMINIMAL_STACK_SIZE, NULL, 5, NULL);
+    if (xTaskCreate(read_light, "light", 3 * configMINIMAL_STACK_SIZE,
+                    NULL, 5, NULL) != pdPASS)
+    {
+        ESP_LOGE(TAG, "Failed to create light sensor task");
+    }
 }
 
 bool is_light_low(void)

@@ -32,6 +32,11 @@ static void attn_off(void)
 
 void app_main(void)
 {
+    if (appble_nvs_init() != ESP_OK)
+    {
+        return;
+    }
+
     appled_init();
     appweb_init(appble_set_switch);
 

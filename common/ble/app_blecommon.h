@@ -10,7 +10,7 @@
 #define app_blecommon_h_
 
 #include <stdint.h>
-
+#include "esp_err.h"
 #include "esp_ble_mesh_defs.h"
 #include "esp_ble_mesh_config_model_api.h"
 #include "esp_ble_mesh_health_model_api.h"
@@ -18,7 +18,10 @@
 
 void appble_get_dev_uuid(uint8_t *dev_uuid);
 
+esp_err_t appble_nvs_init(void);
+void appble_log_mesh_restore_state(void);
 esp_err_t appble_bt_init(void);
+esp_err_t appble_set_device_name(const char *name);
 
 void appble_provisioning_handler(esp_ble_mesh_prov_cb_event_t event,
                                  esp_ble_mesh_prov_cb_param_t *param);
