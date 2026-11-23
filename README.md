@@ -9,3 +9,13 @@ This project demonstrates a distributed smart home system using BLE Mesh communi
 The Light Sensor monitors the surrounding light level and publishes its detected state through the BLE Mesh network. The Switch receives the sensor's messages and controls a relay connected to a load. The Gateway provides a web interface that allows users to manually turn the connected load ON or OFF.
 
 The system uses BLE Mesh for communication between the ESP32 nodes, while Wi-Fi provides connectivity between the Gateway and the user's web browser.
+
+## Features
+
+- **Automatic lighting control** – The Light Sensor detects dark and bright conditions and sends the corresponding state through BLE Mesh.
+- **Manual web control** – Users can control the relay through a webpage hosted by the Gateway.
+- **BLE Mesh communication** – ESP32 nodes communicate using a shared BLE Mesh network.
+- **Distributed architecture** – Gateway, Switch, and Light Sensor have separate responsibilities.
+- **Relay control** – The Switch controls a relay based on received commands.
+- **Provisioned network restoration** – Nodes can restore their saved BLE Mesh provisioning information after restarting, without requiring provisioning again.
+- **Wi-Fi connectivity** – The Gateway connects to a Wi-Fi network to make its web interface accessible locally.
