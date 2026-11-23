@@ -62,3 +62,13 @@ Responsibilities:
 - Controls the relay connected to GPIO 4.
 - Provides the Generic OnOff Server and Client models required by the system.
 
+### 3. Light Sensor Node
+
+The Light Sensor monitors ambient light using an LDR sensor module.
+
+Responsibilities:
+
+- Reads the digital output of the LDR module.
+- Determines whether the environment is DARK or BRIGHT.
+- Publishes its ON/OFF state through BLE Mesh.
+- Sends its state to the All Nodes address (`0xFFFF`).
