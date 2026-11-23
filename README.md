@@ -94,3 +94,27 @@ The Light Sensor monitors the surrounding light level using an LDR sensor module
 | HTTP | Transfers manual control commands between the webpage and Gateway. |
 
 ---
+
+## System Communication Flow
+
+```mermaid
+flowchart TB
+    U["User's Web Browser"]
+    W["Wi-Fi Network"]
+    G["Gateway ESP32"]
+
+    subgraph BLE["BLE Mesh Network"]
+        L["Light Sensor ESP32"]
+        S["Switch ESP32"]
+    end
+
+    R["Relay Module"]
+    D["Connected Load"]
+
+    U <-->|HTTP Requests and Responses| G
+    G <-->|Wi-Fi Connection| W
+    G <-->|BLE Mesh Commands| S
+    L -->|Sensor State Publication| S
+    S -->|GPIO Control| R
+    R --> D
+```
