@@ -34,3 +34,19 @@ This project demonstrates the following concepts:
 - Wi-Fi connectivity and HTTP web server implementation.
 - Communication between distributed microcontroller nodes.
 - Persistent storage of BLE Mesh configuration.
+
+## System Architecture
+
+The system consists of three ESP32 nodes with different responsibilities.
+
+### 1. Gateway Node
+
+The Gateway acts as the main interface between the user and the BLE Mesh network.
+
+Responsibilities:
+
+- Connects to a Wi-Fi network.
+- Hosts the web server and control webpage.
+- Receives manual ON/OFF commands from the webpage.
+- Sends Generic OnOff commands to the BLE Mesh network.
+- Uses the All Nodes address (`0xFFFF`) to send commands to the mesh nodes.
