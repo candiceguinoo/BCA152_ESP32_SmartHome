@@ -50,3 +50,15 @@ Responsibilities:
 - Receives manual ON/OFF commands from the webpage.
 - Sends Generic OnOff commands to the BLE Mesh network.
 - Uses the All Nodes address (`0xFFFF`) to send commands to the mesh nodes.
+
+### 2. Switch Node
+
+The Switch receives commands through BLE Mesh and controls the relay.
+
+Responsibilities:
+
+- Receives manual ON/OFF commands from the Gateway.
+- Receives sensor state messages from the Light Sensor.
+- Controls the relay connected to GPIO 4.
+- Provides the Generic OnOff Server and Client models required by the system.
+
