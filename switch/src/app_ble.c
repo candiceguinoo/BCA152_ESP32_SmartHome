@@ -108,17 +108,6 @@ static void generic_server_cb(esp_ble_mesh_generic_server_cb_event_t event,
                                                    sizeof(srv->state.onoff),
                                                    &srv->state.onoff);
             }
-            esp_err_t err = esp_ble_mesh_model_publish(
-                model,
-                ESP_BLE_MESH_MODEL_OP_GEN_ONOFF_STATUS,
-                sizeof(srv->state.onoff),
-                &srv->state.onoff,
-                ROLE_NODE);
-            if (err != ESP_OK)
-            {
-                ESP_LOGE(TAG, "Failed to publish switch status: %s",
-                         esp_err_to_name(err));
-            }
         }
         break;
     default:
@@ -134,8 +123,12 @@ static void generic_client_cb(esp_ble_mesh_generic_client_cb_event_t event,
     {
     case ESP_BLE_MESH_GENERIC_CLIENT_PUBLISH_EVT:
     {
-        ESP_LOGI(TAG, "sensor state changed (%d)", param->status_cb.onoff_status.present_onoff);
-        set_switch_state(param->status_cb.onoff_status.present_onoff);
+        bool requested_state = param->status_cb.onoff_status.present_onoff;
+        if (requested_state != cbs.sw_get())
+        {
+            ESP_LOGI(TAG, "sensor state changed (%d)", requested_state);
+            set_switch_state(requested_state);
+        }
         break;
     }
     default:
