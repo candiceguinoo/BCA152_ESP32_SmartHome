@@ -19,3 +19,18 @@ The system uses BLE Mesh for communication between the ESP32 nodes, while Wi-Fi 
 - **Relay control** – The Switch controls a relay based on received commands.
 - **Provisioned network restoration** – Nodes can restore their saved BLE Mesh provisioning information after restarting, without requiring provisioning again.
 - **Wi-Fi connectivity** – The Gateway connects to a Wi-Fi network to make its web interface accessible locally.
+
+## Learning Objectives
+
+This project demonstrates the following concepts:
+
+- ESP32 development using PlatformIO and ESP-IDF.
+- Bluetooth Low Energy Mesh networking.
+- BLE Mesh provisioning and node configuration.
+- Generic OnOff Client and Server models.
+- BLE Mesh application key management and model binding.
+- Group addressing and message publication.
+- GPIO input and output control.
+- Wi-Fi connectivity and HTTP web server implementation.
+- Communication between distributed microcontroller nodes.
+- Persistent storage of BLE Mesh configuration.
