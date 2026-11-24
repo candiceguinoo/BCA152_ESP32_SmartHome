@@ -261,7 +261,7 @@ All components are real hardware. Nothing is simulated.
 **Gateway Web Interface Address**
 
 ```text
-http://
+http://192.168.172.77
 ```
 
 > **Important:**
