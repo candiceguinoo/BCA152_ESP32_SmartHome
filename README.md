@@ -258,3 +258,13 @@ All components are real hardware. Nothing is simulated.
 6. The Gateway sends the corresponding Generic OnOff command to the BLE Mesh network.
 7. The Switch receives the command and changes the relay state.
 
+**Gateway Web Interface Address**
+
+```text
+http://
+```
+
+> **Important:**
+> - The laptop or mobile device generally needs to be on the same local network as the Gateway, or have another valid network route to its IP address.
+> - The BLE Mesh communication between the ESP32 nodes does not depend on this Wi-Fi connection.
+
