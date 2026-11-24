@@ -193,3 +193,22 @@ The following table summarizes how the nodes communicate with one another.
 > **Note:** The Switch processes the relevant messages according to its configured models and subscriptions. The relay is controlled locally through GPIO 4.
 
 ---
+## 🔧 Hardware and Components
+
+All components are real hardware. Nothing is simulated.
+
+| Component | Quantity | Description |
+|---|:---:|---|
+| ESP32-WROOM-32 | 3 | Used as the Gateway, Switch, and Light Sensor nodes |
+| LDR Sensor Module (LM393) | 1 | Detects the surrounding light level |
+| Relay Module | 1 | Controls the connected load |
+| LED | 1 | Provides a visual indication on the Light Sensor node |
+| USB Cable | 3 | Used to power and program the ESP32 boards |
+| Smartphone | 1 | Used for BLE Mesh provisioning |
+| Computer / Laptop | 1 | Used for firmware development and webpage access |
+
+> **Note:** The Gateway, Switch, and Light Sensor are separate ESP32 nodes that communicate through BLE Mesh.
+
+
+
+
