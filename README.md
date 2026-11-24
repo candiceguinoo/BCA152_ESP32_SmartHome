@@ -307,3 +307,16 @@ BCA152_ESP32_SmartHome/
 - **`light_sensor/`** – Contains the firmware for the Light Sensor ESP32, which reads the LDR sensor and publishes its detected state.
 - **`common/`** – Contains shared BLE Mesh-related code used by the different nodes.
 - **`README.md`** – Contains the project documentation and instructions.
+
+## Development Environment
+
+The project uses the following development tools:
+
+| Tool | Purpose |
+|---|---|
+| Visual Studio Code | Used to write and edit the program code. |
+| PlatformIO IDE | Used to build and upload firmware to the ESP32 boards. |
+| Espressif ESP-IDF | Development framework used for ESP32 programming. |
+| Git and GitHub | Used to track code changes and store the project repository. |
+| nRF Mesh Mobile Application | Used to provision and configure the BLE Mesh network. |
+| Serial Monitor | Used to view messages and monitor the ESP32 while running. |
