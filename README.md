@@ -134,3 +134,14 @@ All three nodes are provisioned into the same BLE Mesh network using the nRF Mes
 | All Nodes Address | `0xFFFF` |
 | Provisioning Application | nRF Mesh |
 
+### Provisioned Node Addresses
+
+The following addresses were assigned during the current network provisioning:
+
+| Node | BLE Mesh Primary Address |
+|---|---|
+| Gateway | `0x0002` |
+| Switch | `0x0003` |
+| Light Sensor | `0x0004` |
+
+**Note:** These are the addresses assigned during the current provisioning setup. Addresses may differ if the network is recreated or the nodes are provisioned again.
