@@ -118,45 +118,78 @@ flowchart TB
     S -->|GPIO Control| R
     R --> D
 ```
-## BLE Mesh Architecture
+## 📡 BLE Mesh Architecture
 
-The project uses Bluetooth Low Energy Mesh to allow the ESP32 nodes to communicate with one another.
+The project uses **Bluetooth Low Energy (BLE) Mesh** to allow the three ESP32 nodes to communicate wirelessly within a shared mesh network.
 
-All three nodes are provisioned into the same BLE Mesh network using the nRF Mesh mobile application.
+All three nodes are provisioned into the same BLE Mesh network using the **nRF Mesh mobile application**. Each node is assigned a unique unicast address and configured with the required BLE Mesh models and Application Key.
 
-### Network Configuration
+### 1. Network Configuration
+
+The following table shows the BLE Mesh network configuration used in the project.
 
 | Configuration | Value |
 |---|---|
-| Mesh Network Name | SmartHome |
-| Application Key Name | SmartHome_AppKey |
-| Application Key Index | 0 |
+| Mesh Network Name | `SmartHome` |
+| Application Key Name | `SmartHome_AppKey` |
+| Application Key Index | `0` |
 | All Nodes Address | `0xFFFF` |
 | Provisioning Application | nRF Mesh |
 
-### Provisioned Node Addresses
+### 2. Provisioned Node Addresses
 
-The following addresses were assigned during the current network provisioning:
+Each ESP32 node is assigned a unique BLE Mesh Primary Address during provisioning.
 
-| Node | BLE Mesh Primary Address |
+| ESP32 Node | Primary Address |
 |---|---|
 | Gateway | `0x0002` |
 | Switch | `0x0003` |
 | Light Sensor | `0x0004` |
 
-**Note:** These are the addresses assigned during the current provisioning setup. Addresses may differ if the network is recreated or the nodes are provisioned again.
+> **Note:** These addresses represent the current provisioning setup. They may change if the BLE Mesh network is recreated or the nodes are provisioned again.
 
-### BLE Mesh Models
+### 3. BLE Mesh Models
 
-The project uses the Generic OnOff models.
+The project uses the **Bluetooth Mesh Generic OnOff Model** to handle ON/OFF communication between nodes.
 
-| Node | Model | Purpose |
+Each node has a specific model depending on its responsibility in the system.
+
+| Node | BLE Mesh Model | Function |
 |---|---|---|
-| Gateway | Generic OnOff Client (`0x1001`) | Sends ON/OFF commands |
-| Switch | Generic OnOff Server (`0x1000`) | Receives commands and controls the relay |
-| Switch | Generic OnOff Client (`0x1001`) | Receives sensor state messages |
-| Light Sensor | Generic OnOff Server (`0x1000`) | Publishes its detected ON/OFF state |
+| Gateway | Generic OnOff Client (`0x1001`) | Sends manual ON/OFF commands. |
+| Switch | Generic OnOff Server (`0x1000`) | Receives commands and controls the relay. |
+| Switch | Generic OnOff Client (`0x1001`) | Receives sensor state messages. |
+| Light Sensor | Generic OnOff Server (`0x1000`) | Publishes its detected ON/OFF state. |
 
-The models are bound to the shared Application Key with index `0`.
+All models are bound to the shared **Application Key** with index `0` to allow authenticated application-level communication within the mesh network.
 
-The Switch receives the relevant messages through its configured Generic OnOff models.
+### 4. Message Addressing
+
+The project uses the BLE Mesh **All Nodes Address (`0xFFFF`)** to send messages to all nodes in the network.
+
+```text
+All Nodes Address: 0xFFFF
+Address Type: Group Address
+```
+
+The address is used by both the Gateway and Light Sensor:
+
+- **Gateway:** Uses `0xFFFF` when sending manual ON/OFF commands.
+- **Light Sensor:** Uses `0xFFFF` when publishing its detected light state.
+- **Switch:** Receives relevant messages through its configured Generic OnOff models and subscriptions.
+
+Using a group address allows messages to be delivered to multiple subscribed nodes without specifying each destination individually.
+
+### 5. BLE Mesh Communication Summary
+
+The following table summarizes how the nodes communicate with one another.
+
+| Sender | Destination | Message |
+|---|---|---|
+| Gateway | All Nodes (`0xFFFF`) | Manual ON/OFF command |
+| Light Sensor | All Nodes (`0xFFFF`) | Detected light state |
+| Switch | Relay (GPIO 4) | Relay ON/OFF control |
+
+> **Note:** The Switch processes the relevant messages according to its configured models and subscriptions. The relay is controlled locally through GPIO 4.
+
+---
