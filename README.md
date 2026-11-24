@@ -145,3 +145,16 @@ The following addresses were assigned during the current network provisioning:
 | Light Sensor | `0x0004` |
 
 **Note:** These are the addresses assigned during the current provisioning setup. Addresses may differ if the network is recreated or the nodes are provisioned again.
+
+### BLE Mesh Models
+
+The project uses the Generic OnOff models.
+
+| Node | Model | Purpose |
+|---|---|---|
+| Gateway | Generic OnOff Client (`0x1001`) | Sends ON/OFF commands |
+| Switch | Generic OnOff Server (`0x1000`) | Receives commands and controls the relay |
+| Switch | Generic OnOff Client (`0x1001`) | Receives sensor state messages |
+| Light Sensor | Generic OnOff Server (`0x1000`) | Publishes its detected ON/OFF state |
+
+The models are bound to the shared Application Key with index `0`.
