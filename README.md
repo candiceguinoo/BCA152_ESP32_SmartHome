@@ -229,5 +229,32 @@ All components are real hardware. Nothing is simulated.
 > - The relay module is active-low. It switches ON when its input is pulled LOW and switches OFF when its input is HIGH.
 > - The Gateway does not require additional sensor or relay connections for its current web-control function.
 
+## How the System Works
 
+### 1. Automatic Lighting Control
+
+1. The Light Sensor reads the LDR module's digital output.
+2. The firmware determines whether the environment is DARK or BRIGHT.
+3. When darkness is detected, the Light Sensor publishes an ON state through BLE Mesh.
+4. The Switch receives the published state.
+5. The Switch activates the relay.
+6. When brightness is detected, the Light Sensor publishes an OFF state.
+7. The Switch receives the OFF state and deactivates the relay.
+
+**Automatic Control Behavior**
+
+| Light Condition | Sensor State | Relay State |
+|:---:|:---:|:---:|
+| DARK | ON | ON |
+| BRIGHT | OFF | OFF |
+
+### 2. Manual Web Control
+
+1. The Gateway connects to a Wi-Fi network.
+2. The Gateway starts its HTTP web server.
+3. The user connects a computer or mobile device to the same local network.
+4. The user opens the Gateway's IP address in a web browser.
+5. The user selects ON or OFF on the webpage.
+6. The Gateway sends the corresponding Generic OnOff command to the BLE Mesh network.
+7. The Switch receives the command and changes the relay state.
 
