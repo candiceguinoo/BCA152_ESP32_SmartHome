@@ -268,3 +268,42 @@ http://
 > - The laptop or mobile device generally needs to be on the same local network as the Gateway, or have another valid network route to its IP address.
 > - The BLE Mesh communication between the ESP32 nodes does not depend on this Wi-Fi connection.
 
+## Repository Structure
+
+The project is organized into separate directories for each ESP32 node to make the code easier to manage and maintain.
+
+```text
+BCA152_ESP32_SmartHome/
+│
+├── gateway/
+│   ├── src/
+│   ├── include/
+│   ├── platformio.ini
+│   └── ...
+│
+├── switch/
+│   ├── src/
+│   ├── include/
+│   ├── platformio.ini
+│   └── ...
+│
+├── light_sensor/
+│   ├── src/
+│   ├── include/
+│   ├── platformio.ini
+│   └── ...
+│
+├── common/
+│   ├── ble/
+│   └── ...
+│
+└── README.md
+```
+
+### Directory Description
+
+- **`gateway/`** – Contains the firmware for the Gateway ESP32, including its Wi-Fi connection and web server.
+- **`switch/`** – Contains the firmware for the Switch ESP32, which receives BLE Mesh messages and controls the relay.
+- **`light_sensor/`** – Contains the firmware for the Light Sensor ESP32, which reads the LDR sensor and publishes its detected state.
+- **`common/`** – Contains shared BLE Mesh-related code used by the different nodes.
+- **`README.md`** – Contains the project documentation and instructions.
