@@ -158,3 +158,5 @@ The project uses the Generic OnOff models.
 | Light Sensor | Generic OnOff Server (`0x1000`) | Publishes its detected ON/OFF state |
 
 The models are bound to the shared Application Key with index `0`.
+
+The Switch receives the relevant messages through its configured Generic OnOff models.
