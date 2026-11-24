@@ -331,3 +331,19 @@ Make sure the following tools are installed before starting the project:
 | PlatformIO Extension | Provides the tools needed to build and upload ESP32 firmware. |
 | Git | Used for version control. |
 | ESP-IDF Toolchain | Must be installed and configured through PlatformIO.
+
+## Getting Started
+
+### 1. Clone the Repository
+
+Clone the project from GitHub:
+
+```bash
+git clone https://github.com/YOUR_USERNAME/BCA152_ESP32_SmartHome.git
+```
+
+Navigate to the project directory:
+
+```bash
+cd BCA152_ESP32_SmartHome
+```
