@@ -118,3 +118,19 @@ flowchart TB
     S -->|GPIO Control| R
     R --> D
 ```
+## BLE Mesh Architecture
+
+The project uses Bluetooth Low Energy Mesh to allow the ESP32 nodes to communicate with one another.
+
+All three nodes are provisioned into the same BLE Mesh network using the nRF Mesh mobile application.
+
+### Network Configuration
+
+| Configuration | Value |
+|---|---|
+| Mesh Network Name | SmartHome |
+| Application Key Name | SmartHome_AppKey |
+| Application Key Index | 0 |
+| All Nodes Address | `0xFFFF` |
+| Provisioning Application | nRF Mesh |
+
