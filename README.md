@@ -209,6 +209,25 @@ All components are real hardware. Nothing is simulated.
 
 > **Note:** The Gateway, Switch, and Light Sensor are separate ESP32 nodes that communicate through BLE Mesh.
 
+## Pin Configuration
+
+### Switch Node
+
+| ESP32 Pin | Connects to | Purpose |
+|---|---|---|
+| GPIO 4 | Relay IN1 | Controls the connected relay |
+
+### Light Sensor Node
+
+| ESP32 Pin | Connects to | Purpose |
+|---|---|---|
+| GPIO 34 | LDR Module DO | Reads the digital light detection output |
+| GPIO 19 | LED | Indicates the sensor status |
+
+> **Note:**
+> - The LDR module uses its digital output to detect DARK or BRIGHT conditions. The configured dark detection level is `1`.
+> - The relay module is active-low. It switches ON when its input is pulled LOW and switches OFF when its input is HIGH.
+> - The Gateway does not require additional sensor or relay connections for its current web-control function.
 
 
 
