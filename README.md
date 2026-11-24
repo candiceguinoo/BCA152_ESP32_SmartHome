@@ -320,3 +320,14 @@ The project uses the following development tools:
 | Git and GitHub | Used to track code changes and store the project repository. |
 | nRF Mesh Mobile Application | Used to provision and configure the BLE Mesh network. |
 | Serial Monitor | Used to view messages and monitor the ESP32 while running. |
+
+### Software Requirements
+
+Make sure the following tools are installed before starting the project:
+
+| Requirement | Description |
+|---|---|
+| Visual Studio Code | Code editor for the project. |
+| PlatformIO Extension | Provides the tools needed to build and upload ESP32 firmware. |
+| Git | Used for version control. |
+| ESP-IDF Toolchain | Must be installed and configured through PlatformIO.
