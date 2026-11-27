@@ -502,3 +502,11 @@ The Light Sensor and Switch were tested using their Serial Monitors. The Light S
 | **Command Confirmation** | Manual Gateway commands use unacknowledged Generic OnOff messages, so delivery confirmation is not provided for every command. |
 | **Configuration Dependency** | System operation depends on proper provisioning, Application Key configuration, and model binding. |
 | **Light Detection** | Automatic lighting control depends on the LDR module's digital output and configured detection level. |
+
+## Future Improvements
+
+The system can be further improved through the following enhancements:
+
+| Improvement | Description |
+|---|---|
+| **Reliable Message Delivery** | Implement acknowledged commands to verify whether messages are successfully received. |
