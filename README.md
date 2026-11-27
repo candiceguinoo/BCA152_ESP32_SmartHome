@@ -241,7 +241,7 @@ All components are real hardware. Nothing is simulated.
 > **Note:** The Gateway, Switch, and Light Sensor are separate ESP32 nodes that communicate through BLE Mesh.
 
 ---
-## Pin Configuration
+## 🔌 Pin Configuration
 
 <img width="2000" height="1414" alt="LED 1 (pink) (14)" src="https://github.com/user-attachments/assets/b3276e8a-307b-49fb-b97d-7b4ab2c965a5" />
 
@@ -269,7 +269,7 @@ All components are real hardware. Nothing is simulated.
 > - The Gateway does not require additional sensor or relay connections for its current web-control function.
 
 ---
-## How the System Works
+## ⚙️ How the System Works
 
 ### 1. Automatic Lighting Control
 
@@ -309,7 +309,7 @@ http://192.168.172.77
 > - The BLE Mesh communication between the ESP32 nodes does not depend on this Wi-Fi connection.
 
 ---
-## Repository Structure
+## 📂 Repository Structure
 
 The project is organized into separate directories for each ESP32 node to make the code easier to manage and maintain.
 
@@ -349,7 +349,7 @@ BCA152_ESP32_SmartHome/
 - **`common/`** – Contains shared BLE Mesh-related code used by the different nodes.
 - **`README.md`** – Contains the project documentation and instructions.
 
-## Development Environment
+## 🛠️ Development Environment
 
 The project uses the following development tools:
 
@@ -374,7 +374,7 @@ Make sure the following tools are installed before starting the project:
 | ESP-IDF Toolchain | Must be installed and configured through PlatformIO.
 
 ---
-## Getting Started
+## 🚀 Getting Started
 
 ### 1. Clone the Repository
 
@@ -481,7 +481,7 @@ The Serial Monitor can be used to check:
 (PENDING)
 
 ---
-## Unit Testing
+## 🧪 Unit Testing
 
 The following tests were performed to check whether each ESP32 node and the system's main functions work as expected.
 
@@ -502,7 +502,7 @@ The following tests were performed to check whether each ESP32 node and the syst
 | ESP32 restarts | Saved BLE Mesh provisioning information is restored. |
 
 ---
-## Functional Verification
+## ✅ Functional Verification
 
 The following results summarize the observed behavior during development.
 
@@ -523,7 +523,7 @@ The following results summarize the observed behavior during development.
 The Light Sensor and Switch were tested using their Serial Monitors. The Light Sensor reported its detected state and BLE Mesh publication, while the Switch reported the received sensor state and corresponding relay changes.
 
 ---
-## Engineering Decisions
+## 💡 Engineering Decisions
 
 | Design Decision | Reason |
 |---|---|
@@ -534,7 +534,7 @@ The Light Sensor and Switch were tested using their Serial Monitors. The Light S
 | **Wi-Fi Environment Variables** | Keeps Wi-Fi credentials out of the source code and public repository. |
 | **Active-LOW Relay Logic** | The firmware accounts for the relay's LOW signal for ON and HIGH signal for OFF. |
 
-## Limitations
+## ⚠️ Limitations
 
 | Limitation | Description |
 |---|---|
@@ -546,7 +546,7 @@ The Light Sensor and Switch were tested using their Serial Monitors. The Light S
 | **Light Detection** | Automatic lighting control depends on the LDR module's digital output and configured detection level. |
 
 ---
-## Future Improvements
+## 🔮 Future Improvements
 
 The system can be further improved through the following enhancements:
 
@@ -560,7 +560,7 @@ The system can be further improved through the following enhancements:
 | **Long-Term Testing** | Conduct more extended testing, including repeated restarts and power cycles, to evaluate system reliability. |
 
 ---
-## References and Acknowledgments
+## 📚 References and Acknowledgments
 
 ### References
 - [ESP-IDF Documentation](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/)
