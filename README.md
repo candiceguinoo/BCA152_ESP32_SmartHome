@@ -500,3 +500,5 @@ The Light Sensor and Switch were tested using their Serial Monitors. The Light S
 | **Communication Dependency** | The Gateway's Wi-Fi connection is independent of BLE Mesh communication between nodes. |
 | **Message Delivery** | BLE Mesh messages may not always reach their intended nodes. |
 | **Command Confirmation** | Manual Gateway commands use unacknowledged Generic OnOff messages, so delivery confirmation is not provided for every command. |
+| **Configuration Dependency** | System operation depends on proper provisioning, Application Key configuration, and model binding. |
+
