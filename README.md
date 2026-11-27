@@ -213,11 +213,15 @@ All components are real hardware. Nothing is simulated.
 
 ## Pin Configuration
 
+<img width="2000" height="1414" alt="LED 1 (pink) (14)" src="https://github.com/user-attachments/assets/b3276e8a-307b-49fb-b97d-7b4ab2c965a5" />
+
 ### Switch Node
 
 | ESP32 Pin | Connects to | Purpose |
 |---|---|---|
 | GPIO 4 | Relay IN1 | Controls the connected relay |
+
+<img width="2000" height="1414" alt="LED 1 (pink) (13)" src="https://github.com/user-attachments/assets/e88f2ad8-34d9-43c8-9d9a-e997fcb4b971" />
 
 ### Light Sensor Node
 
