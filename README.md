@@ -1,6 +1,19 @@
-# ESP32 Smart Home BLE Mesh System
+# 🏠 ESP32 Smart Home BLE Mesh System
 
-A wireless smart home automation system built using **ESP32 microcontrollers** and **Bluetooth Low Energy (BLE) Mesh**. The project uses three ESP32 nodes to provide automatic lighting control through an ambient light sensor and manual control through a web-based interface hosted by the Gateway.
+<p align="center">
+  <strong>A wireless smart home system built using **ESP32 microcontrollers** and **BLE Mesh**. It uses three ESP32 nodes for automatic lighting based on light detection and manual control through the Gateway's web interface.</strong>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Platform-ESP32-blue?style=flat-square" alt="ESP32">
+  <img src="https://img.shields.io/badge/Communication-BLE%20Mesh-orange?style=flat-square" alt="BLE Mesh">
+  <img src="https://img.shields.io/badge/Network-Wi--Fi-green?style=flat-square" alt="Wi-Fi">
+  <img src="https://img.shields.io/badge/Framework-ESP--IDF-red?style=flat-square" alt="ESP-IDF">
+  <img src="https://img.shields.io/badge/IDE-PlatformIO-purple?style=flat-square" alt="PlatformIO">
+</p>
+
+
+
 
 ---
 
