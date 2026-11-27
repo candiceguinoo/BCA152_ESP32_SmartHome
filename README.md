@@ -318,29 +318,88 @@ The project is organized into separate directories for each ESP32 node to make t
 ```text
 BCA152_ESP32_SmartHome/
 │
-├── gateway/
-│   ├── src/
-│   ├── include/
-│   ├── platformio.ini
-│   └── ...
-│
-├── switch/
-│   ├── src/
-│   ├── include/
-│   ├── platformio.ini
-│   └── ...
-│
-├── light_sensor/
-│   ├── src/
-│   ├── include/
-│   ├── platformio.ini
-│   └── ...
+├── .pio/
+├── .vscode/
 │
 ├── common/
 │   ├── ble/
-│   └── ...
+│   │   ├── app_blecommon.c
+│   │   └── app_blecommon.h
+│   │
+│   └── led/
+│       ├── app_ledattn.c
+│       └── app_ledattn.h
 │
-└── README.md
+├── gateway/
+│   ├── .pio/
+│   ├── include/
+│   ├── lib/
+│   ├── src/
+│   │   ├── app_ble.c
+│   │   ├── app_ble.h
+│   │   ├── app_ip.c
+│   │   ├── app_ip.h
+│   │   ├── app_web.c
+│   │   ├── app_web.h
+│   │   ├── CMakeLists.txt
+│   │   └── main.c
+│   ├── test/
+│   ├── .gitignore
+│   ├── CMakeLists.txt
+│   ├── partitions.csv
+│   ├── platformio.ini
+│   ├── sdkconfig
+│   ├── sdkconfig.az-delivery-devkit-v4
+│   ├── sdkconfig.ci.bluedroid
+│   └── sdkconfig.defaults
+│
+├── light_sensor/
+│   ├── .pio/
+│   ├── include/
+│   ├── lib/
+│   ├── src/
+│   │   ├── app_ble.c
+│   │   ├── app_ble.h
+│   │   ├── app_sensor.c
+│   │   ├── app_sensor.h
+│   │   ├── CMakeLists.txt
+│   │   ├── component.mk
+│   │   └── main.c
+│   ├── test/
+│   ├── .gitignore
+│   ├── CMakeLists.txt
+│   ├── platformio.ini
+│   ├── sdkconfig
+│   ├── sdkconfig.az-delivery-devkit-v4
+│   ├── sdkconfig.az-delivery-devkit-v4.old
+│   ├── sdkconfig.ci.bluedroid
+│   └── sdkconfig.defaults
+│
+├── switch/
+│   ├── .pio/
+│   ├── include/
+│   ├── lib/
+│   ├── src/
+│   │   ├── app_ble.c
+│   │   ├── app_ble.h
+│   │   ├── app_sw.c
+│   │   ├── app_sw.h
+│   │   ├── CMakeLists.txt
+│   │   └── main.c
+│   ├── test/
+│   ├── .gitignore
+│   ├── CMakeLists.txt
+│   ├── platformio.ini
+│   ├── sdkconfig
+│   ├── sdkconfig.az-delivery-devkit-v4
+│   ├── sdkconfig.az-delivery-devkit-v4.old
+│   ├── sdkconfig.ci.bluedroid
+│   └── sdkconfig.defaults
+│
+├── .gitignore
+├── light_sensor.fzz
+├── README.md
+└── switch.fzz
 ```
 
 ### Directory Description
