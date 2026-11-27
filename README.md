@@ -499,3 +499,4 @@ The Light Sensor and Switch were tested using their Serial Monitors. The Light S
 | **Network Access** | The Gateway webpage is intended for local network access and may not be accessible from separate networks without a valid network route. |
 | **Communication Dependency** | The Gateway's Wi-Fi connection is independent of BLE Mesh communication between nodes. |
 | **Message Delivery** | BLE Mesh messages may not always reach their intended nodes. |
+| **Command Confirmation** | Manual Gateway commands use unacknowledged Generic OnOff messages, so delivery confirmation is not provided for every command. |
