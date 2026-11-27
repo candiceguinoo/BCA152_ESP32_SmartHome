@@ -555,23 +555,15 @@ The following tests were performed to check whether each ESP32 node and the syst
 ---
 ## ✅ Functional Verification
 
-The following results summarize the observed behavior during development.
+The system was tested as a whole to verify that the three ESP32 nodes work together as intended.
 
-| Component / Function | Observed Result |
+| Function | Observed Result |
 |---|---|
-| Gateway BLE Mesh provisioning restoration | Successful |
-| Switch BLE Mesh provisioning restoration | Successful |
-| Light Sensor BLE Mesh provisioning restoration | Successful |
-| Light Sensor DARK detection | Detected |
-| Light Sensor BRIGHT detection | Detected |
-| Sensor state publication | BLE Mesh publication accepted |
-| Sensor-to-Switch communication | Switch received the sensor state changes |
-| Relay ON/OFF response | Switch changed relay state according to received sensor messages |
-| Gateway Wi-Fi connection | Connected successfully |
-| Gateway HTTP web server | Started successfully |
-| Gateway webpage accessed through a cellphone | Successfully accessed using a cellphone connected to the same Wi-Fi network |
-
-The Light Sensor and Switch were tested using their Serial Monitors. The Light Sensor reported its detected state and BLE Mesh publication, while the Switch reported the received sensor state and corresponding relay changes.
+| Automatic Lighting | The Light Sensor detected changes in light conditions and triggered the corresponding relay response through BLE Mesh. |
+| Manual Web Control | The connected load was successfully controlled through the Gateway web interface. |
+| Local Network Access | The Gateway webpage was accessible using a cellphone connected to the same Wi-Fi network. |
+| BLE Mesh Communication | The nodes successfully exchanged messages through the configured BLE Mesh network. |
+| Configuration Restoration | The nodes restored their saved BLE Mesh configuration after restarting. |
 
 ---
 ## 💡 Engineering Decisions
