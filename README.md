@@ -510,3 +510,4 @@ The system can be further improved through the following enhancements:
 | Improvement | Description |
 |---|---|
 | **Reliable Message Delivery** | Implement acknowledged commands to verify whether messages are successfully received. |
+| **Relay State Feedback** | Display the actual relay state on the Gateway webpage. |
