@@ -416,3 +416,21 @@ Replace `COMXX` with the correct serial port assigned to your ESP32.
 
 Repeat the process for the Switch and Light Sensor.
 
+### 6. Open the Serial Monitor
+
+To check the firmware output:
+
+```powershell
+pio device monitor -p COMXX -b 115200
+```
+
+Replace `COMXX` with the correct COM port.
+
+The Serial Monitor can be used to check:
+
+- Provisioning status
+- Wi-Fi connection
+- Sensor readings
+- Relay state changes
+- BLE Mesh messages
+
