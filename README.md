@@ -525,4 +525,4 @@ The system can be further improved through the following enhancements:
 - [Nordic Semiconductor nRF Mesh Documentation](https://docs.nordicsemi.com/)
 
 ### Acknowledgments
-We would like to acknowledge our instructor and the learning resources that helped guide us in developing, configuring, testing, and understanding the ESP32 Smart Home BLE Mesh System as part of our BCA152 course.
+We would like to acknowledge our instructor, Prof. Paul Rodolf Castor, and the learning resources that helped guide us in developing, configuring, testing, and understanding the ESP32 Smart Home BLE Mesh System as part of our BCA152 course.
