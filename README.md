@@ -491,3 +491,9 @@ The Light Sensor and Switch were tested using their Serial Monitors. The Light S
 | **Persistent Storage** | Saves BLE Mesh configuration so nodes can restore their provisioning after restarting. |
 | **Wi-Fi Environment Variables** | Keeps Wi-Fi credentials out of the source code and public repository. |
 | **Active-LOW Relay Logic** | The firmware accounts for the relay's LOW signal for ON and HIGH signal for OFF. |
+
+## Limitations
+
+### 1. Network Access
+- The Gateway webpage is intended for local network access.
+- Access may be unavailable when the user's device and Gateway are on separate networks without a valid network route.
