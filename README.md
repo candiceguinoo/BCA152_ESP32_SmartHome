@@ -300,6 +300,18 @@ All components are real hardware. Nothing is simulated.
 6. The Gateway sends the corresponding Generic OnOff command to the BLE Mesh network.
 7. The Switch receives the command and changes the relay state.
 
+### 🌐 Gateway Web Interface
+
+The Gateway provides a web interface that allows users to manually turn the connected light ON or OFF. The webpage can be accessed using a computer or cellphone connected to the same Wi-Fi network.
+
+<img width="1919" height="995" alt="d426a33a-6af2-407f-af25-227e1887d525" src="https://github.com/user-attachments/assets/a7ec038e-7368-4ad2-8e6f-c0be18c878ef" />
+
+<p align="center">
+  <img src="images/gateway-web-interface.jpg" width="700" alt="Gateway web interface for manual light control">
+</p>
+<br>
+
+
 **Gateway Web Interface Address**
 
 ```text
