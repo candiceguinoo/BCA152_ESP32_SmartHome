@@ -501,4 +501,4 @@ The Light Sensor and Switch were tested using their Serial Monitors. The Light S
 | **Message Delivery** | BLE Mesh messages may not always reach their intended nodes. |
 | **Command Confirmation** | Manual Gateway commands use unacknowledged Generic OnOff messages, so delivery confirmation is not provided for every command. |
 | **Configuration Dependency** | System operation depends on proper provisioning, Application Key configuration, and model binding. |
-
+| **Light Detection** | Automatic lighting control depends on the LDR module's digital output and configured detection level. |
