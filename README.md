@@ -515,3 +515,14 @@ The system can be further improved through the following enhancements:
 | **Sensor Filtering** | Improve sensor readings to reduce unnecessary state changes in automatic lighting control. |
 | **Web Authentication** | Add authentication to protect the Gateway webpage from unauthorized access. |
 | **Long-Term Testing** | Conduct more extended testing, including repeated restarts and power cycles, to evaluate system reliability. |
+
+## References and Acknowledgments
+
+### References
+- [ESP-IDF Documentation](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/)
+- [ESP-BLE-MESH Documentation](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/esp-ble-mesh.html)
+- [PlatformIO Documentation](https://docs.platformio.org/en/latest/)
+- [Nordic Semiconductor nRF Mesh Documentation](https://docs.nordicsemi.com/)
+
+### Acknowledgments
+We would like to acknowledge our instructor and the learning resources that helped guide us in developing, configuring, testing, and understanding the ESP32 Smart Home BLE Mesh System as part of our BCA152 course.
