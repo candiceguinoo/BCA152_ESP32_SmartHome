@@ -195,6 +195,9 @@ The following table summarizes how the nodes communicate with one another.
 ---
 ## 🔧 Hardware and Components
 
+<img width="2000" height="1414" alt="LED 1 (pink) (11)" src="https://github.com/user-attachments/assets/a4c74662-958e-49ba-84b4-def22974e769" />
+
+
 All components are real hardware. Nothing is simulated.
 
 | Component | Quantity | Description |
