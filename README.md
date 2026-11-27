@@ -131,22 +131,19 @@ The Light Sensor monitors the surrounding light level using an LDR sensor module
 ```mermaid
 flowchart TB
     U["User's Web Browser"]
-    W["Wi-Fi Network"]
     G["Gateway ESP32"]
-
-    subgraph BLE["BLE Mesh Network"]
-        L["Light Sensor ESP32"]
-        S["Switch ESP32"]
-    end
-
+    M["BLE Mesh Network"]
+    L["Light Sensor ESP32"]
+    S["Switch ESP32"]
     R["Relay Module"]
     D["Connected Load"]
 
-    U <-->|HTTP Requests and Responses| G
-    G <-->|Wi-Fi Connection| W
-    G <-->|BLE Mesh Commands| S
-    L -->|Sensor State Publication| S
-    S -->|GPIO Control| R
+    U <-->|HTTP| G
+    G <-->|Wi-Fi| W["Wi-Fi Network"]
+    G <-->|BLE Mesh Commands| M
+    L -->|Sensor State| M
+    M --> S
+    S -->|GPIO 4| R
     R --> D
 ```
 ---
