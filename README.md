@@ -177,6 +177,14 @@ Each ESP32 node is assigned a unique BLE Mesh Primary Address during provisionin
 
 > **Note:** These addresses represent the current provisioning setup. They may change if the BLE Mesh network is recreated or the nodes are provisioned again.
 
+### 📱 Provisioned Nodes in nRF Mesh
+
+<img width="1080" height="2214" alt="94f2454f-6bed-4e79-a324-3a514257e64e" src="https://github.com/user-attachments/assets/970f913c-4d27-4ffb-bd0e-d551e7e4025b" />
+
+<p align="center">
+  <img src="images/ble-mesh-network.png" width="500" alt="Provisioned ESP32 nodes in nRF Mesh">
+</p>
+
 ### 3. BLE Mesh Models
 
 The project uses the **Bluetooth Mesh Generic OnOff Model** for ON/OFF communication between nodes.
