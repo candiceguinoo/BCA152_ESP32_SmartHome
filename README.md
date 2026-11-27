@@ -494,10 +494,7 @@ The Light Sensor and Switch were tested using their Serial Monitors. The Light S
 
 ## Limitations
 
-### 1. Network Access
-- The Gateway webpage is intended for local network access.
-- Access may be unavailable when the user's device and Gateway are on separate networks without a valid network route.
-
-### 2. Communication
-- The Gateway's Wi-Fi connection is independent of BLE Mesh communication.
-- BLE Mesh messages may not always reach their intended nodes.
+| Limitation | Description |
+|---|---|
+| **Network Access** | The Gateway webpage is intended for local network access and may not be accessible from separate networks without a valid network route. |
+| **Communication Dependency** | The Gateway's Wi-Fi connection is independent of BLE Mesh communication between nodes. |
