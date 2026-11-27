@@ -77,75 +77,38 @@ This project demonstrates the following concepts:
 - Persistent storage of BLE Mesh configuration.
 
 ---
-
 ## 🏗️ System Architecture
 
-The system consists of three ESP32 nodes, each with a specific responsibility.
-
-### 1. Gateway Node
-
-The Gateway acts as the main interface between the user and the BLE Mesh network.
-
-**Responsibilities:**
-- Connects to a Wi-Fi network.
-- Hosts the web server and control webpage.
-- Receives manual ON/OFF commands from the webpage.
-- Sends Generic OnOff commands to the BLE Mesh network.
-- Uses the All Nodes address (`0xFFFF`) to send commands to the mesh nodes.
-
-### 2. Switch Node
-
-The Switch receives commands through BLE Mesh and controls the connected relay.
-
-**Responsibilities:**
-- Receives manual ON/OFF commands from the Gateway.
-- Receives sensor state messages from the Light Sensor.
-- Controls the relay connected to GPIO 4.
-- Provides the Generic OnOff Server and Client models required by the system.
-
-### 3. Light Sensor Node
-
-The Light Sensor monitors the surrounding light level using an LDR sensor module.
-
-**Responsibilities:**
-- Reads the digital output of the LDR module.
-- Determines whether the environment is DARK or BRIGHT.
-- Publishes its ON/OFF state through BLE Mesh.
-- Sends its state to the All Nodes address (`0xFFFF`).
-
----
-
-## 📡 Communication Overview
-
-| Communication | Purpose |
-|---|---|
-| Wi-Fi | Connects the Gateway to the user's web browser. |
-| BLE Mesh | Handles communication between the three ESP32 nodes. |
-| GPIO | Reads the LDR output and controls the relay. |
-| HTTP | Transfers manual control commands between the webpage and Gateway. |
-
----
-
-## System Communication Flow
+The system consists of three ESP32 nodes: Gateway, Switch, and Light Sensor. The Gateway provides manual control through a web interface using Wi-Fi, while the Light Sensor sends detected light states through BLE Mesh. The Switch receives relevant messages and controls the relay connected to the load.
 
 ```mermaid
-flowchart TB
-    U["User's Web Browser"]
+flowchart TD
+    U["User (Laptop / Cellphone)"]
+    W["Wi-Fi Network"]
     G["Gateway ESP32"]
-    M["BLE Mesh Network"]
+
+    M(("BLE Mesh Network<br/>All Nodes: 0xFFFF"))
+
     L["Light Sensor ESP32"]
     S["Switch ESP32"]
     R["Relay Module"]
     D["Connected Load"]
 
-    U <-->|HTTP| G
-    G <-->|Wi-Fi| W["Wi-Fi Network"]
-    G <-->|BLE Mesh Commands| M
-    L -->|Sensor State| M
-    M --> S
+    U <-->|Web Browser / HTTP| G
+    G <-->|Wi-Fi| W
+    G -->|Manual ON/OFF Commands| M
+    L -->|Detected Light State| M
+    M -->|Relevant Messages| S
     S -->|GPIO 4| R
     R --> D
 ```
+---
+### Communication Flow
+
+- **Gateway:** Allows manual light control through a web interface accessed over Wi-Fi. It sends ON/OFF commands through BLE Mesh.
+- **Light Sensor:** Detects DARK or BRIGHT conditions and publishes the corresponding state through BLE Mesh.
+- **Switch:** Receives relevant BLE Mesh messages and controls the relay through GPIO 4.
+- **Relay:** Turns the connected load ON or OFF based on the Switch node's control signal.
 ---
 ## 📡 BLE Mesh Architecture
 
