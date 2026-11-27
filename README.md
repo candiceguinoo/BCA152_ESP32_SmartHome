@@ -402,4 +402,17 @@ pio run -e az-delivery-devkit-v4
 cd light_sensor
 pio run -e az-delivery-devkit-v4
 ```
+### 5. Upload the Firmware
+
+Connect the appropriate ESP32 board through USB and upload the firmware.
+
+Example for the Gateway:
+
+```powershell
+pio run -e az-delivery-devkit-v4 -t upload --upload-port COMXX
+```
+
+Replace `COMXX` with the correct serial port assigned to your ESP32.
+
+Repeat the process for the Switch and Light Sensor.
 
