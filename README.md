@@ -513,8 +513,23 @@ The Serial Monitor can be used to check:
 - BLE Mesh messages
 
 ---
-## BLE Mesh Provisioning and Configuration
-(PENDING)
+## 🔧 BLE Mesh Provisioning and Configuration
+
+The three ESP32 nodes were provisioned and configured using the **nRF Mesh mobile application** to enable communication within the same BLE Mesh network.
+
+### Provisioning and Configuration Steps
+
+1. Create the `SmartHome` network in the nRF Mesh application.
+2. Provision the Gateway, Switch, and Light Sensor.
+3. Create and add the shared Application Key `SmartHome_AppKey` (Index `0`) to all nodes.
+4. Bind the following models to the shared Application Key:
+   - **Gateway:** Generic OnOff Client
+   - **Switch:** Generic OnOff Server and Client
+   - **Light Sensor:** Generic OnOff Server
+5. Configure the Light Sensor publication address to `0xFFFF` using `SmartHome_AppKey`.
+6. Save the network configuration.
+
+> **Note:** All nodes must share the same network and Application Key configuration for communication. Once provisioning settings are saved and persistent storage is working, nodes should restore their configuration after restarting without requiring re-provisioning.
 
 ---
 ## 🧪 Unit Testing
