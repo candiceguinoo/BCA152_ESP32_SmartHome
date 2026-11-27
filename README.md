@@ -511,3 +511,4 @@ The system can be further improved through the following enhancements:
 |---|---|
 | **Reliable Message Delivery** | Implement acknowledged commands to verify whether messages are successfully received. |
 | **Relay State Feedback** | Display the actual relay state on the Gateway webpage. |
+| **Additional Devices** | Integrate more sensor nodes and controlled devices into the BLE Mesh network. |
