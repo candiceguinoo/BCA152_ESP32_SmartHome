@@ -436,3 +436,22 @@ The Serial Monitor can be used to check:
 
 ## BLE Mesh Provisioning and Configuration
 (PENDING)
+
+## Unit Testing
+
+The following tests were performed to check whether each ESP32 node and the system's main functions work as expected.
+
+| Test | Expected Result |
+|---|---|
+| Gateway starts | Gateway restores its BLE Mesh configuration. |
+| Switch starts | Switch restores its BLE Mesh configuration. |
+| Light Sensor starts | Light Sensor restores its BLE Mesh configuration. |
+| Light Sensor detects darkness | Sensor publishes ON. |
+| Switch receives ON | Relay activates. |
+| Light Sensor detects brightness | Sensor publishes OFF. |
+| Switch receives OFF | Relay deactivates. |
+| Gateway connects to Wi-Fi | Gateway receives an IP address. |
+| Gateway starts its web server | Webpage becomes accessible through the local network. |
+| Gateway sends manual ON | Switch activates the relay. |
+| Gateway sends manual OFF | Switch deactivates the relay. |
+| ESP32 restarts | Saved BLE Mesh provisioning information is restored. |
