@@ -460,3 +460,23 @@ The following tests were performed to check whether each ESP32 node and the syst
 | Gateway sends manual ON | Switch activates the relay. |
 | Gateway sends manual OFF | Switch deactivates the relay. |
 | ESP32 restarts | Saved BLE Mesh provisioning information is restored. |
+
+## Functional Verification
+
+The following results summarize the observed behavior during development.
+
+| Component / Function | Observed Result |
+|---|---|
+| Gateway BLE Mesh provisioning restoration | Successful |
+| Switch BLE Mesh provisioning restoration | Successful |
+| Light Sensor BLE Mesh provisioning restoration | Successful |
+| Light Sensor DARK detection | Detected |
+| Light Sensor BRIGHT detection | Detected |
+| Sensor state publication | BLE Mesh publication accepted |
+| Sensor-to-Switch communication | Switch received the sensor state changes |
+| Relay ON/OFF response | Switch changed relay state according to received sensor messages |
+| Gateway Wi-Fi connection | Connected successfully |
+| Gateway HTTP web server | Started successfully |
+| Gateway webpage accessed through a cellphone | Successfully accessed using a cellphone connected to the same Wi-Fi network |
+
+The Light Sensor and Switch were tested using their Serial Monitors. The Light Sensor reported its detected state and BLE Mesh publication, while the Switch reported the received sensor state and corresponding relay changes.
