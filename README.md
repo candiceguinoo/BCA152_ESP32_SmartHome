@@ -441,10 +441,6 @@ The Serial Monitor can be used to check:
 
 The following tests were performed to check whether each ESP32 node and the system's main functions work as expected.
 
-## Unit Testing
-
-The following tests were performed to check whether each ESP32 node and the system's main functions work as expected.
-
 | Test | Expected Result |
 |---|---|
 | Gateway starts | Gateway restores its BLE Mesh configuration. |
