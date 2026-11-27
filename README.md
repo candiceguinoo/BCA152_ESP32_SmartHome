@@ -359,3 +359,21 @@ The project contains three separate PlatformIO environments:
 - `light_sensor`
 
 Open the corresponding project directory when building or uploading firmware.
+
+### 3. Configure Gateway Wi-Fi Credentials
+
+The Gateway uses environment variables for its Wi-Fi credentials.
+
+In PowerShell, configure the variables before building the Gateway:
+
+```powershell
+$env:WIFI_SSID = "YOUR_WIFI_SSID"
+$env:WIFI_PASS = "YOUR_WIFI_PASSWORD"
+```
+
+Replace the example values with your own Wi-Fi network credentials.
+
+The Gateway's PlatformIO configuration reads these variables during compilation. Do not commit actual Wi-Fi credentials to the public repository.
+
+> **Note:**
+> - Environment variables must be configured again in a new PowerShell session.
