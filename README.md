@@ -219,7 +219,9 @@ All components are real hardware. Nothing is simulated.
 
 | ESP32 Pin | Connects to | Purpose |
 |---|---|---|
-| GPIO 4 | Relay IN1 | Controls the connected relay |
+| GPIO 4 | Relay IN1 | Controls the relay |
+| VIN (5V) | Relay VCC | Supplies power to the relay module |
+| GND | Relay GND | Common ground connection |
 
 <img width="2000" height="1414" alt="LED 1 (pink) (13)" src="https://github.com/user-attachments/assets/e88f2ad8-34d9-43c8-9d9a-e997fcb4b971" />
 
@@ -228,7 +230,8 @@ All components are real hardware. Nothing is simulated.
 | ESP32 Pin | Connects to | Purpose |
 |---|---|---|
 | GPIO 34 | LDR Module DO | Reads the digital light detection output |
-| GPIO 19 | LED | Indicates the sensor status |
+| VIN (5V) | LDR Module VCC | Supplies power to the LDR module |
+| GND | LDR Module GND | Common ground connection |
 
 > **Note:**
 > - The LDR module uses its digital output to detect DARK or BRIGHT conditions. The configured dark detection level is `1`.
