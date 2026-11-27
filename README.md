@@ -514,3 +514,4 @@ The system can be further improved through the following enhancements:
 | **Additional Devices** | Integrate more sensor nodes and controlled devices into the BLE Mesh network. |
 | **Sensor Filtering** | Improve sensor readings to reduce unnecessary state changes in automatic lighting control. |
 | **Web Authentication** | Add authentication to protect the Gateway webpage from unauthorized access. |
+| **Long-Term Testing** | Conduct more extended testing, including repeated restarts and power cycles, to evaluate system reliability. |
