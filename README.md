@@ -118,6 +118,7 @@ flowchart TB
     S -->|GPIO Control| R
     R --> D
 ```
+---
 ## 📡 BLE Mesh Architecture
 
 The project uses **Bluetooth Low Energy (BLE) Mesh** to allow the three ESP32 nodes to communicate wirelessly within a shared mesh network.
