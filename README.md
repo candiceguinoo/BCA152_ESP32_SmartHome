@@ -179,47 +179,41 @@ Each ESP32 node is assigned a unique BLE Mesh Primary Address during provisionin
 
 ### 3. BLE Mesh Models
 
-The project uses the **Bluetooth Mesh Generic OnOff Model** to handle ON/OFF communication between nodes.
+The project uses the **Bluetooth Mesh Generic OnOff Model** for ON/OFF communication between nodes.
 
-Each node has a specific model depending on its responsibility in the system.
+Each node uses a specific model depending on its role in the system.
 
 | Node | BLE Mesh Model | Function |
 |---|---|---|
 | Gateway | Generic OnOff Client (`0x1001`) | Sends manual ON/OFF commands. |
-| Switch | Generic OnOff Server (`0x1000`) | Receives commands and controls the relay. |
-| Switch | Generic OnOff Client (`0x1001`) | Receives sensor state messages. |
-| Light Sensor | Generic OnOff Server (`0x1000`) | Publishes its detected ON/OFF state. |
+| Switch | Generic OnOff Server (`0x1000`) | Receives ON/OFF commands for relay control. |
+| Switch | Generic OnOff Client (`0x1001`) | Receives the published light sensor state. |
+| Light Sensor | Generic OnOff Server (`0x1000`) | Publishes its detected light state. |
 
-All models are bound to the shared **Application Key** with index `0` to allow authenticated application-level communication within the mesh network.
+All models are bound to the shared **Application Key** with index `0` to allow communication within the mesh network.
 
 ### 4. Message Addressing
 
-The project uses the BLE Mesh **All Nodes Address (`0xFFFF`)** to send messages to all nodes in the network.
+The project uses the BLE Mesh **All Nodes Address (`0xFFFF`)**, a group address used to send messages to all nodes in the mesh network.
 
-```text
-All Nodes Address: 0xFFFF
-Address Type: Group Address
-```
+| Node | Destination Address | Purpose |
+|---|---|---|
+| Gateway | `0xFFFF` | Sends manual ON/OFF commands. |
+| Light Sensor | `0xFFFF` | Publishes the detected light state. |
 
-The address is used by both the Gateway and Light Sensor:
-
-- **Gateway:** Uses `0xFFFF` when sending manual ON/OFF commands.
-- **Light Sensor:** Uses `0xFFFF` when publishing its detected light state.
-- **Switch:** Receives relevant messages through its configured Generic OnOff models and subscriptions.
-
-Using a group address allows messages to be delivered to multiple subscribed nodes without specifying each destination individually.
+The Switch node receives relevant messages through its configured BLE Mesh models and subscriptions. This allows it to process sensor updates and manual commands without requiring direct communication with a specific node address.
 
 ### 5. BLE Mesh Communication Summary
 
-The following table summarizes how the nodes communicate with one another.
+The following table summarizes the communication between the nodes and the relay.
 
 | Sender | Destination | Message |
 |---|---|---|
-| Gateway | All Nodes (`0xFFFF`) | Manual ON/OFF command |
-| Light Sensor | All Nodes (`0xFFFF`) | Detected light state |
+| Gateway | BLE Mesh Network (`0xFFFF`) | Manual ON/OFF command |
+| Light Sensor | BLE Mesh Network (`0xFFFF`) | Detected light state |
 | Switch | Relay (GPIO 4) | Relay ON/OFF control |
 
-> **Note:** The Switch processes the relevant messages according to its configured models and subscriptions. The relay is controlled locally through GPIO 4.
+> **Note:** The Switch node processes the received messages and controls the relay locally through GPIO 4.
 
 ---
 ## 🔧 Hardware and Components
