@@ -377,3 +377,29 @@ The Gateway's PlatformIO configuration reads these variables during compilation.
 
 > **Note:**
 > - Environment variables must be configured again in a new PowerShell session.
+
+### 4. Build the Firmware
+
+Navigate to the node directory you want to build.
+
+**Gateway:**
+
+```powershell
+cd gateway
+pio run -e az-delivery-devkit-v4
+```
+
+**Switch:**
+
+```powershell
+cd switch
+pio run -e az-delivery-devkit-v4
+```
+
+**Light Sensor:**
+
+```powershell
+cd light_sensor
+pio run -e az-delivery-devkit-v4
+```
+
