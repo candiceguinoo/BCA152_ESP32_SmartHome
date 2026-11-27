@@ -434,3 +434,5 @@ The Serial Monitor can be used to check:
 - Relay state changes
 - BLE Mesh messages
 
+## BLE Mesh Provisioning and Configuration
+(PENDING)
