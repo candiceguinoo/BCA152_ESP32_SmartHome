@@ -1,7 +1,7 @@
 # 🏠 ESP32 Smart Home BLE Mesh System
 
 <p align="center">
-  <strong>A wireless smart home system built using **ESP32 microcontrollers** and **BLE Mesh**. It uses three ESP32 nodes for automatic lighting based on light detection and manual control through the Gateway's web interface.</strong>
+  <strong>A wireless smart home system built using ESP32 microcontrollers and BLE Mesh. It uses three ESP32 nodes for automatic lighting based on light detection and manual control through the Gateway's web interface.</strong>
 </p>
 
 <p align="center">
@@ -12,11 +12,29 @@
   <img src="https://img.shields.io/badge/IDE-PlatformIO-purple?style=flat-square" alt="PlatformIO">
 </p>
 
+---
+## 📑 Table of Contents
 
-
+- [Project Overview](#-project-overview)
+- [Features](#-features)
+- [Learning Objectives](#-learning-objectives)
+- [System Architecture](#️-system-architecture)
+- [BLE Mesh Architecture](#-ble-mesh-architecture)
+- [Hardware and Components](#-hardware-and-components)
+- [Pin Configuration](#pin-configuration)
+- [How the System Works](#how-the-system-works)
+- [Repository Structure](#repository-structure)
+- [Development Environment](#development-environment)
+- [Getting Started](#getting-started)
+- [BLE Mesh Provisioning and Configuration](#ble-mesh-provisioning-and-configuration)
+- [Unit Testing](#unit-testing)
+- [Functional Verification](#functional-verification)
+- [Engineering Decisions](#engineering-decisions)
+- [Limitations](#limitations)
+- [Future Improvements](#future-improvements)
+- [References and Acknowledgments](#references-and-acknowledgments)
 
 ---
-
 ## 📌 Project Overview
 
 This project demonstrates a distributed smart home system using BLE Mesh communication. Instead of relying on a single ESP32 to handle every operation, the system separates its functions into three nodes:
