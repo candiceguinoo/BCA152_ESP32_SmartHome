@@ -347,3 +347,15 @@ Navigate to the project directory:
 ```bash
 cd BCA152_ESP32_SmartHome
 ```
+
+### 2. Open the Project
+
+Open the repository in Visual Studio Code and make sure PlatformIO is installed.
+
+The project contains three separate PlatformIO environments:
+
+- `gateway`
+- `switch`
+- `light_sensor`
+
+Open the corresponding project directory when building or uploading firmware.
