@@ -513,3 +513,4 @@ The system can be further improved through the following enhancements:
 | **Relay State Feedback** | Display the actual relay state on the Gateway webpage. |
 | **Additional Devices** | Integrate more sensor nodes and controlled devices into the BLE Mesh network. |
 | **Sensor Filtering** | Improve sensor readings to reduce unnecessary state changes in automatic lighting control. |
+| **Web Authentication** | Add authentication to protect the Gateway webpage from unauthorized access. |
