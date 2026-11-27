@@ -480,3 +480,14 @@ The following results summarize the observed behavior during development.
 | Gateway webpage accessed through a cellphone | Successfully accessed using a cellphone connected to the same Wi-Fi network |
 
 The Light Sensor and Switch were tested using their Serial Monitors. The Light Sensor reported its detected state and BLE Mesh publication, while the Switch reported the received sensor state and corresponding relay changes.
+
+## Engineering Decisions
+
+| Design Decision | Reason |
+|---|---|
+| **Separate ESP32 Nodes** | Each node has a specific role: Gateway, Switch, or Light Sensor, making the system responsibilities easier to manage. |
+| **BLE Mesh Communication** | Allows the nodes to communicate without depending on the Gateway's Wi-Fi connection. |
+| **All Nodes Address (`0xFFFF`)** | Used to send messages to all nodes in the BLE Mesh network. |
+| **Persistent Storage** | Saves BLE Mesh configuration so nodes can restore their provisioning after restarting. |
+| **Wi-Fi Environment Variables** | Keeps Wi-Fi credentials out of the source code and public repository. |
+| **Active-LOW Relay Logic** | The firmware accounts for the relay's LOW signal for ON and HIGH signal for OFF. |
