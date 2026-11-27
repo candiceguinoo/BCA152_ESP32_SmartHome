@@ -211,6 +211,7 @@ All components are real hardware. Nothing is simulated.
 
 > **Note:** The Gateway, Switch, and Light Sensor are separate ESP32 nodes that communicate through BLE Mesh.
 
+---
 ## Pin Configuration
 
 <img width="2000" height="1414" alt="LED 1 (pink) (14)" src="https://github.com/user-attachments/assets/b3276e8a-307b-49fb-b97d-7b4ab2c965a5" />
@@ -238,6 +239,7 @@ All components are real hardware. Nothing is simulated.
 > - The relay module is active-low. It switches ON when its input is pulled LOW and switches OFF when its input is HIGH.
 > - The Gateway does not require additional sensor or relay connections for its current web-control function.
 
+---
 ## How the System Works
 
 ### 1. Automatic Lighting Control
@@ -277,6 +279,7 @@ http://192.168.172.77
 > - The laptop or mobile device generally needs to be on the same local network as the Gateway, or have another valid network route to its IP address.
 > - The BLE Mesh communication between the ESP32 nodes does not depend on this Wi-Fi connection.
 
+---
 ## Repository Structure
 
 The project is organized into separate directories for each ESP32 node to make the code easier to manage and maintain.
@@ -341,6 +344,7 @@ Make sure the following tools are installed before starting the project:
 | Git | Used for version control. |
 | ESP-IDF Toolchain | Must be installed and configured through PlatformIO.
 
+---
 ## Getting Started
 
 ### 1. Clone the Repository
@@ -443,9 +447,11 @@ The Serial Monitor can be used to check:
 - Relay state changes
 - BLE Mesh messages
 
+---
 ## BLE Mesh Provisioning and Configuration
 (PENDING)
 
+---
 ## Unit Testing
 
 The following tests were performed to check whether each ESP32 node and the system's main functions work as expected.
@@ -466,6 +472,7 @@ The following tests were performed to check whether each ESP32 node and the syst
 | Gateway sends manual OFF | Switch deactivates the relay. |
 | ESP32 restarts | Saved BLE Mesh provisioning information is restored. |
 
+---
 ## Functional Verification
 
 The following results summarize the observed behavior during development.
@@ -486,6 +493,7 @@ The following results summarize the observed behavior during development.
 
 The Light Sensor and Switch were tested using their Serial Monitors. The Light Sensor reported its detected state and BLE Mesh publication, while the Switch reported the received sensor state and corresponding relay changes.
 
+---
 ## Engineering Decisions
 
 | Design Decision | Reason |
@@ -508,6 +516,7 @@ The Light Sensor and Switch were tested using their Serial Monitors. The Light S
 | **Configuration Dependency** | System operation depends on proper provisioning, Application Key configuration, and model binding. |
 | **Light Detection** | Automatic lighting control depends on the LDR module's digital output and configured detection level. |
 
+---
 ## Future Improvements
 
 The system can be further improved through the following enhancements:
@@ -521,6 +530,7 @@ The system can be further improved through the following enhancements:
 | **Web Authentication** | Add authentication to protect the Gateway webpage from unauthorized access. |
 | **Long-Term Testing** | Conduct more extended testing, including repeated restarts and power cycles, to evaluate system reliability. |
 
+---
 ## References and Acknowledgments
 
 ### References
